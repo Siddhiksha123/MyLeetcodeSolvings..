@@ -4,7 +4,7 @@ Use two queues, let's call them queue1 and queue2.
 
 When you push an element onto the stack, always push it into queue1.
 
-When you pop an element from the stack, move all elements from queue1 to queue2, except for the last element. This last element will be the one you want to remove (pop). Then, swap the names of queue1 and queue2.
+When you pop an element from the stack, move all elements from queue1 to queue2, except for the last  element. This last element will be the one you want to remove (pop). Then, swap the names of queue1 and queue2.
 
 The top of the stack is always the last element in queue1.
 
@@ -91,4 +91,113 @@ private:
     std::queue<int> q1, q2;
 };
 
+
+THEORY :
+mplement a Stack using a Queue
+Theory:
+To implement a stack using a queue, you can simulate the behavior of a stack using a single queue. The key idea is to maintain the most recently added element at the front of the queue while pushing new elements. When you want to pop an element, you can simply dequeue all elements from the front of the queue and enqueue them again, leaving the last element in the queue as the top element of the stack. This way, the most recently pushed element always becomes the top of the stack.
+
+Here's the C++ code for a stack using a queue with time complexity analysis:
+#include <queue>
+
+class StackUsingQueue {
+public:
+    StackUsingQueue() {}
+
+    // Push operation - O(1)
+    void push(int x) {
+        q.push(x);
+    }
+
+    // Pop operation - O(n)
+    int pop() {
+        int n = q.size();
+        for (int i = 0; i < n - 1; i++) {
+            q.push(q.front());
+            q.pop();
+        }
+        int top_element = q.front();
+        q.pop();
+        return top_element;
+    }
+
+    // Top operation - O(1)
+    int top() {
+        return q.back();
+    }
+
+    // Empty operation - O(1)
+    bool empty() {
+        return q.empty();
+    }
+
+private:
+    std::queue<int> q;
+};
+Push operation: Adding an element to the queue is O(1).
+Pop operation: Popping an element from the stack involves moving n-1 elements from the front to the back of the queue, where n is the number of elements in the queue. Hence, the time complexity is O(n).
+Top operation: Accessing the last element of the queue is O(1).
+Empty operation: Checking if the queue is empty is O(1).
+
+
+
+
+
+
+Implement a Queue using Stacks
+Theory:
+To implement a queue using two stacks, one stack (stack1) is used for enqueue (push) operations, and the other stack (stack2) is used for dequeue (pop) operations. When you enqueue an element, you push it onto stack1. When you dequeue an element, you check if stack2 is empty. If it is, you transfer all elements from stack1 to stack2, reversing their order in the process. This way, the element at the top of stack2 becomes the front of the queue.
+
+Here's the C++ code for a queue using two stacks with time complexity analysis:
+#include <stack>
+
+class QueueUsingStack {
+public:
+    QueueUsingStack() {}
+
+    // Enqueue operation - O(1)
+    void enqueue(int x) {
+        stack1.push(x);
+    }
+
+    // Dequeue operation - O(n) amortized
+    int dequeue() {
+        if (stack2.empty()) {
+            // Transfer elements from stack1 to stack2
+            while (!stack1.empty()) {
+                stack2.push(stack1.top());
+                stack1.pop();
+            }
+        }
+        int front_element = stack2.top();
+        stack2.pop();
+        return front_element;
+    }
+
+    // Front operation - O(n) amortized
+    int front() {
+        if (stack2.empty()) {
+            // Transfer elements from stack1 to stack2
+            while (!stack1.empty()) {
+                stack2.push(stack1.top());
+                stack1.pop();
+            }
+        }
+        return stack2.top();
+    }
+
+    // Empty operation - O(1)
+    bool empty() {
+        return stack1.empty() && stack2.empty();
+    }
+
+private:
+    std::stack<int> stack1, stack2;
+};
+
+Enqueue operation: Pushing an element onto stack1 is O(1).
+Dequeue operation: Dequeuing an element involves transferring elements from stack1 to stack2, which is an O(n) operation in the worst case. However, this is an amortized analysis because each element is moved at most twice: once when it's enqueued and once when it's dequeued, making it O(1) amortized.
+Front operation: Similar to dequeue, transferring elements to stack2 is an O(n) operation in the worst case, but O(1) amortized.
+Empty operation: Checking if both stacks are empty is O(1).
+Keep in mind that while these implementations use the standard operations of a queue or stack, there is a trade-off between enqueue and dequeue/front operations, especially for the queue implementation using two stacks. Enqueue is efficient (O(1)), but dequeue/front have an amortized time complexity of O(1) due to the transfer of elements between stacks.
 
