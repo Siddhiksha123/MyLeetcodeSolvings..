@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int MOD = 1000000007;
+
+    int countHomogenous(string s) {
+        int length = 1;
+        long long cnt = 0; // Use long long to prevent overflow
+
+        for (int i = 1; i < s.length(); i++) {
+            if (s[i] == s[i - 1]) {
+                length++;
+            } else {
+                cnt = (cnt + ((long long)length * (length + 1) / 2) % MOD) % MOD;
+                length = 1; // Reset length for the new homogenous substring
+            }
+        }
+
+        // Calculate the number of substrings for the last homogenous substring
+        cnt = (cnt + ((long long)length * (length + 1) / 2) % MOD) % MOD;
+
+        return cnt;
+    }
+};
