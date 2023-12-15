@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool kLengthApart(vector<int>& nums, int k) {
+        int n=nums.size();
+        int count=0;
+        int old;
+        int flag=true;
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]==1&&flag==true)
+            {
+                old=i;
+                flag=false;
+            }
+            else if(nums[i]==1)
+            {
+                if(i-old-1<k)
+                {
+                    return false;
+                }
+                else
+                {
+                    old=i;
+                }   
+            }
+        }
+        return true;
+    }
+};
