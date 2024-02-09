@@ -16,7 +16,7 @@ public:
         int start = 0; // Starting index of the longest palindrome substring
         int maxLength = 1; // Length of the longest palindrome substring
         
-        // Check for substrings of length 2
+        // Check for substrings of length 2   s
         for (int i = 0; i < n - 1; ++i) {
             if (s[i] == s[i + 1]) {
                 dp[i][i + 1] = true;
