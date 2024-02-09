@@ -11,7 +11,7 @@ public:
         // All substrings of length 1 are palindromes
         for (int i = 0; i < n; ++i) {
             dp[i][i] = true;
-        }
+        }  
         
         int start = 0; // Starting index of the longest palindrome substring
         int maxLength = 1; // Length of the longest palindrome substring
