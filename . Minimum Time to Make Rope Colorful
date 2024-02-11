@@ -14,7 +14,7 @@ public:
                 currTotal += neededTime[j]; // Accumulate total removal time for the same color group
                 currMax = max(currMax, neededTime[j]); // Track maximum removal time within the group
                 j++; // Move the pointer to the next balloon
-            }
+            }  
 
             // Once the end of the current color group is reached, add the cost of this group to totalTime
             totalTime += currTotal - currMax; // Deduct the maximum removal time from the total removal time
