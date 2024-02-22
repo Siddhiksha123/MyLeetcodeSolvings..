@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<string> commonChars(vector<string>& words) {
+        vector<string> ans;
+        unordered_map<char,int> min_f;
+        for(char i = 'a' ; i<='z' ; i++) {
+            min_f[i] = 2000; // initializing with largest val 
+        }
+
+        for(auto w : words){
+            unordered_map<char,int> freq;
+
+            for(auto c : w){
+                freq[c] ++;
+            }
+            for(auto i = 'a' ; i<='z'; i++) {
+                min_f[i] = min(min_f[i], freq[i]);
+            }
+        }
+        
+        for(auto i = 'a' ; i<='z'; i++){
+            cout<<"i : "<< min_f[i]<<" ";
+            while(min_f[i]>0){
+                string temp;
+                temp.push_back(i);
+                ans.push_back(temp);
+                min_f[i]--;
+            }
+        }
+        return ans;
+    }
+};
